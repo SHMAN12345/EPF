@@ -1,10 +1,17 @@
 package my.edu.tarc.epf
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,6 +21,10 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import my.edu.tarc.epf.databinding.ActivityMainBinding
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,6 +52,37 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //back press
+        val backPressedCallback= object : OnBackPressedCallback(true)
+        {
+            override fun handleOnBackPressed() {
+                val builder=AlertDialog.Builder(this@MainActivity)
+                builder.setMessage("Are you sure want to exit?")
+                    .setPositiveButton("Exit",{_,_-> finish()})
+                    .setNegativeButton("Cancel",{_,_->})
+
+                builder.create().show()
+            }
+
+        }
+
+
+
+        //Navigate to profile
+        //Index 0 = Profile Picture
+        val view=navView.getHeaderView(0)
+        val profilePic=view.findViewById<ImageView>(R.id.imageViewProfilePicture)
+        val textViewName=view.findViewById<TextView>(R.id.textViewName)
+        val textViewEmail=view.findViewById<TextView>(R.id.textViewEmail)
+
+
+        view.setOnClickListener{
+            findNavController(R.id.nav_host_fragment_content_main)
+                .navigate(R.id.nav_profile)
+
+            binding.drawerLayout.closeDrawers()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,4 +110,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }

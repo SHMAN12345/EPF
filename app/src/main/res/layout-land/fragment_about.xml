@@ -51,12 +51,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/LocateUs"
+        android:text="@string/locate_us"
         app:icon="@drawable/baseline_location_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/buttonCall"
-        tools:text="@string/LocateUs" />
+        tools:text="@string/locate_us" />
 
     <ImageView
         android:id="@+id/imageView2"
