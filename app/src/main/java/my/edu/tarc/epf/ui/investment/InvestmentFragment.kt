@@ -45,7 +45,27 @@ class InvestmentFragment : Fragment() {
 
             dateDialogFragment.show(parentFragmentManager,"DateDialog")
         }
-        binding.buttonCalculate.setOnClickListener{ }
+        binding.buttonCalculate.setOnClickListener{
+            val balance = binding.editTextBalanceAccount1.text.toString().toFloat()
+            val age = binding.textViewAge.text.toString().toInt()
+            var excess = 0.0
+
+            val basic = when(age){
+                in 16..20 -> 5000
+                in 21..25 -> 14000
+                in 26..30 -> 29000
+                in 31..35 -> 50000
+                in 36..40 -> 78000
+                in 41..45 -> 116000
+                in 46..50 -> 165000
+                in 51..55 -> 228000
+                else -> 0
+            }
+
+            excess = ((balance - basic)*0.3)
+
+            binding.textViewAmountInvestment.text = excess.toString()
+        }
         binding.buttonReset.setOnClickListener{ }
     }
 
